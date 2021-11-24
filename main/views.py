@@ -25,3 +25,9 @@ def gif_like_action(request, gif_id, liked):
         gif.likes -= 1
     gif.save()
     return redirect('single_gif', gif.id)
+
+
+def test_page(request):
+    if request.method == 'POST':
+        print(request.POST)
+    return render(request, 'add_gif.html')
