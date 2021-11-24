@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from .models import Gif, Category
+from .forms import GifForm
 # Create your views here.
 
 def homepage(request):
@@ -11,7 +12,7 @@ def category_view(request, category_id):
     return render(request, 'category.html', {'category': cat})
 
 def gif_view(request, gif_id):
-    gif = Gif.objects.get(id=gif_id)
+    gif = get_object_or_404(Gif, id=gif_id)
     return render(request, 'gif.html', {'gif': gif})
 
 def categories_view(request):
@@ -30,4 +31,19 @@ def gif_like_action(request, gif_id, liked):
 def test_page(request):
     if request.method == 'POST':
         print(request.POST)
-    return render(request, 'add_gif.html')
+        form = GifForm(request.POST)
+
+        if form.is_valid():
+            print(form.cleaned_data)
+            gif = Gif.objects.create(**form.cleaned_data)
+            return redirect('single_gif', gif.id)
+
+    if request.method == 'GET':
+        form = GifForm()
+    return render(request, 'add_gif.html', {'form': form})
+
+
+def gifs_by_likes(request):
+    gifs = get_list_or_404(Gif, likes__gt=0)
+    gifs.sort(key=lambda x:x.likes, reverse=True)
+    return render(request, 'homepage.html', {'gifs': gifs})
