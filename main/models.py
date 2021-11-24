@@ -10,6 +10,7 @@ class Gif(models.Model):
     likes = models.IntegerField(default=0)
 
 
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
     gifs = models.ManyToManyField(Gif, related_name='categories')
