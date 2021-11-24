@@ -14,4 +14,5 @@ class Gif(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100)
     gifs = models.ManyToManyField(Gif, related_name='categories')
+    timestamp = models.DateTimeField(auto_now_add=True)
 
