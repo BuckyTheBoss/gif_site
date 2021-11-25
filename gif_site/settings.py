@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Israel'
 
 USE_I18N = True
 
@@ -118,7 +118,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
+# Where django will colect all static to
+STATIC_ROOT = BASE_DIR/"staticfiles"
+
+# All folders not in apps that we want django to collect/notice
+STATICFILES_DIRS = [
+    BASE_DIR/"mystatic",
+
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
